@@ -1,14 +1,29 @@
+const handleBlogRouter = require('./src/router/blog')
+const handleUserRouter = require('./src/router/user')
 const serverHandle = (req, res) => {
   // 设置返回格式
   res.setHeader('Content-type', 'application/json')
-  const resData = {
-    name: 'Aqing',
-    age: 20,
-    env: process.env.NODE_ENV // process是node的一个全局变量，可以获取当前环境是什么环境
+  // 获取path
+  const url = req.url
+  req.path = url.split('？')[0]
+  // 处理blog路由
+  const blogData = handleBlogRouter(req, res)
+  if (blogData) {
+    res.end(JSON.stringify(blogData))
+    return
   }
-  res.end(JSON.stringify(resData))
+  // 处理user路由
+  const userData = handleUserRouter(req, res)
+  if (userData) {
+    res.end(JSON.stringify(userData))
+    return
+  }
+  // 未命中路由
+  res.writeHead(404, {"Content-type": "text/plain"})
+  res.write("404 not found")
+  res.end()
 }
 
 module.exports = serverHandle
 
-// 抽离模块：app.js处理业务
+// process.env.NODE_ENV

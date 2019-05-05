@@ -3,5 +3,3 @@ const http = require('http')
 const PORT = 8000
 const server = http.createServer(serverHandle)
 server.listen(PORT)
-
-// www.js 只负责server配置
