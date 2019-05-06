@@ -1,43 +1,30 @@
+const {exec} = require('../db/mysql')
 /**
  * 获取博客列表
  * @param author 作者
  * @param keyword 关键字
- * @returns {*[]}
  */
 const getList = (author, keyword) => {
-  // 先返回假数据，格式正确
-  return [
-    {
-      id: 1,
-      title: '标题A',
-      content: '内容A',
-      createTime: 1557058226130,
-      author: 'Aqing'
-    },
-    {
-      id: 2,
-      title: '标题B',
-      content: '内容B',
-      createTime: 1557058267960,
-      author: 'Cyan'
-    }
-  ]
+  let sql = `select * from blogs where 1=1 `
+  if (author) {
+    sql += `and author='${author}' `
+  }
+  if (keyword) {
+    sql += `and title like '%${keyword}%' `
+  }
+  sql += `order by createtime desc;`
+  return exec(sql)
 }
 
 /**
  * 获取一篇博客详情
  * @param id：查询博客的id号
- * @returns {{createTime: number, author: string, id: number, title: string, content: string}}
  */
 const getDetail = id => {
-  // 先返回假数据
-  return {
-    id: 1,
-    title: '标题A',
-    content: '内容A',
-    createTime: 1557058226130,
-    author: 'Aqing'
-  }
+  const sql = `select * from blogs where id='${id}'`
+  return exec(sql).then(rows => {
+    return rows[0] // 这里的查询结果是一个数组
+  })
 }
 
 /**
