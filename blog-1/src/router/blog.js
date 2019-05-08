@@ -21,27 +21,35 @@ const handleBlogRouter = (req, res) => {
   }
   // 新建一篇博客
   if (method === 'POST' && req.path === '/api/blog/new') {
+    req.body.author = 'Aqing' // 未做登录，暂时用假数据
     const blogData = req.body
-    const data = newBlog(blogData)
-    return new SuccessModel(data)
+    const result = newBlog(blogData)
+    return result.then(data => {
+      return new SuccessModel(data)
+    })
   }
   // 更新一遍博客
   if (method === 'POST' && req.path === '/api/blog/update') {
     const result = updateBlog(id, req.body)
-    if (result) {
-      return new SuccessModel('更新成功')
-    } else {
-      return new ErrorModel('更新失败')
-    }
+    return result.then(val => {
+      if (val) {
+        return new SuccessModel('更新成功')
+      } else {
+        return new ErrorModel('更新失败')
+      }
+    })
   }
   // 删除一篇博客
   if (method === 'POST' && req.path === '/api/blog/del') {
-    const result = delBolg(id)
-    if (result) {
-      return new SuccessModel('删除成功')
-    } else {
-      return new ErrorModel('删除失败')
-    }
+    req.body.author = 'Aqing' // 未做登录，暂时用假数据
+    const result = delBolg(id, req.body.author)
+    return result.then(val => {
+      if (val) {
+        return new SuccessModel('删除成功')
+      } else {
+        return new ErrorModel('删除失败')
+      }
+    })
   }
 }
 
