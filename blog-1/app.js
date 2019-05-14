@@ -37,8 +37,20 @@ const serverHandle = (req, res) => {
   // 获取path
   const url = req.url
   req.path = url.split('?')[0]
-  // 获取url参数query
+  // 解析query
   req.query = querystring.parse(url.split('?')[1])
+  // 解析cookie
+  req.cookie = {}
+  const cookieStr = req.headers.cookie || ''
+  cookieStr.split(';').forEach(item => {
+    if (!item) {
+      return
+    }
+    const arr = item.split('=')
+    const key = arr[0].trim()
+    req.cookie[key] = arr[1]
+  })
+  console.log(req.cookie)
   // 处理postData
   getPostData(req).then(postData => {
     req.body = postData
