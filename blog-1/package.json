@@ -1,7 +1,7 @@
 {
   "name": "blog-1",
   "version": "1.0.0",
-  "description": "",
+  "description": "MyBlogs",
   "main": "bin/www.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,11 +9,12 @@
     "prd": "cross-env NODE_ENV=production nodemon ./bin/www.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "AqingCyan",
   "license": "ISC",
   "devDependencies": {
     "cross-env": "^5.2.0",
     "mysql": "^2.17.1",
-    "nodemon": "^1.19.0"
+    "nodemon": "^1.19.0",
+    "redis": "^2.8.0"
   }
 }
