@@ -92,7 +92,7 @@ const serverHandle = (req, res) => {
         blogResult.then(blogData => {
           if (needSetCookie) {
             // 设置cookie
-            res.setHeader('Set-Cookie', `username=${userId}; path=/; httpOnly; expires=${getCookieExpires()}`)
+            res.setHeader('Set-Cookie', `userid=${userId}; path=/; httpOnly; expires=${getCookieExpires()}`)
           }
           res.end(JSON.stringify(blogData))
         })
@@ -104,7 +104,7 @@ const serverHandle = (req, res) => {
         userResult.then(userData => {
           if (needSetCookie) {
             // 设置cookie
-            res.setHeader('Set-Cookie', `username=${userId}; path=/; httpOnly; expires=${getCookieExpires()}`)
+            res.setHeader('Set-Cookie', `userid=${userId}; path=/; httpOnly; expires=${getCookieExpires()}`)
           }
           res.end(JSON.stringify(userData))
         })
